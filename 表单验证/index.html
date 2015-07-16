@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script type="text/javascript" src="js/jquery-1.10.0.js"></script>
+		<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+		<script type="text/javascript" src="js/jquery.form.js"></script>
+
+		
+		<style type="text/css">
+			label {
+				width: 10em;
+				float: left;
+			}
+			label.haha {
+				color: red;
+				padding-left: 18px;
+				vertical-align: top;
+				width: 196px;
+				b ackground: url("images/unchecked.gif") no-repeat;
+			}
+			input.haha {
+				border: 1px solid red;
+			}
+			label.valid {
+				background: url("images/checked.gif") no-repeat;
+				color: #065FB 9;
+			}
+			input.focus {
+				border: 2px solid green;
+			}
+			ul li {
+				display: block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="form_con">
+			<form class="cmxform" id="myform" method="post" action="">
+				<table cellspacing="0" cellpadding="0">
+					<tbody>
+						<tr>
+							<td>用户名</td>
+							<td>
+								<input type="text" name="username" class="required" />
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>密码</td>
+							<td>
+								<input id="password" type="password" name="firstpwd" />
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>验证密码</td>
+							<td>
+								<input type="password" name="secondpwd" />
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>性别</td>
+							<td>
+								<input id="sex" type="radio" name="sex" />男
+								<input type="radio" name="sex" />女</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>年龄</td>
+							<td>
+								<input type="text" name="age" />
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>邮箱</td>
+							<td>
+								<input type="text" name="email" />
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>个人网页</td>
+							<td>
+								<input type="text" name="purl" />
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>电话</td>
+							<td>
+								<input type="text" name="telephone" />
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>附件</td>
+							<td>
+								<input type="file" name="afile" />
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<input type="submit" name="submit" value="提交" />
+								<button>重置</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function() {
+			var validator = $("#myform").validate({
+				debug: true, //调试模式取消submit的默认提交功能   
+				errorClass: "haha", //默认为错误的样式类为：error
+				focusInvalid: true,
+				onkeyup: false,
+				submitHandler: function(form) { //表单提交句柄,为一回调函数，带一个参数： form    
+			 	 alert("提交表单");  
+			 	              //form.submit();   提交表单   
+		 	          },    
+		 	          rules: {           //定义验证规则,其中属性名为表单的name属性   
+	 	 	             username: {   
+	 	 		                required: true,  
+	 	 		                 minlength: 2,    
+	 	 		                 remote: "uservalid.jsp"  //传说当中的ajax验证   
+	 	 		             },  
+ 	 		             firstpwd: {  
+ 	 			                required: true,   
+ 	 			                 //minlength: 6  
+ 	 			                 rangelength: [6,8]  
+ 	 			             },    
+ 			             secondpwd: {  
+ 				                 required: true,  
+ 				                 equalTo: "#password"   
+ 				             },
+ 				          sex: {   
+		          	                 required: true 
+		          	             },  
+		                   age: {  
+	          		                 required: true, 
+	          		                 range: [0,120]  
+	          		             },   
+          		             email: {
+          			                 required: true, 
+          			                 email: true  
+          			            },  
+          		             purl: {   
+          				                 required: true,  
+          				                 url: true 
+          				             },   
+  				             afile: { 
+  					                 required: true,  
+  					                 accept: "xls,doc,rar,zip" 
+  					             }  
+  					         },
+	                   messages: {       //自定义验证消息  
+	          	             username: {
+	          	             	   required: "用户名是必需的！", 
+             	                   minlength: "最少5",  
+             	                   remote: "已占用"  
+             	               },    
+             	              firstpwd: {    
+             	   	                 required: "密码是必需的！"    
+             	   	                    
+             	   	            },    
+         	   	             secondpwd: {   
+         	   		                 required: "密码验证是必需的！",     
+         	   		                 equalTo: "密码验证需要与密码一致"   
+         	   		             },  
+     	   		             sex: {   
+     	   			                 required: "性别是必需的"   
+     	   			             },   
+     	   			          age: {    
+     	   				                 required: "年龄是必需的",   
+     	   				                 range: "年龄必须介于{0}-{1}之间"   
+     	   				             },   
+     	   				             email: {    
+     	   					                 required: "邮箱是必需的！",
+     	                   	 email: "请输入正确的邮箱地址（例如 myemail@163.com）"
+     	                   	       },  
+           	                   purl: {   
+           	       	                 required: "个人主页是必需的",   
+           	                        url: "请输入正确的url格式,如 http://www.domainname.com" 
+           	       	            },  
+           	                    afile: {    
+           	       		                 required: "附件是必需的！",  
+           	       		                 accept: "只接收xls,doc,rar,zip文件"  
+           	       		             }   
+           	       		         },   
+           	       		         errorPlacement: function(error, element) {  //验证消息放置的地方   
+           	       			             error.appendTo( element.parent("td").next("td") );   
+           	       			         },   
+       	       			       highlight: function(element, errorClass) {  //针对验证的表单设置高亮   
+       	       				             $(element).addClass(errorClass);   
+       	       				         },  
+       				         success: function(label) {      
+       					                     label.addClass("valid").text("Ok!")    
+       					             }    
+     	                   	       					            
+     	                            /*,
+     	                   	       91.         errorContainer: "#error_con",               //验证消息集中放置的容器
+     	                   	       92.         errorLabelContainer: "#error_con ul",       //存放消息无序列表的容器  
+     	                   	       93.         wrapper: "li",                              //将验证消息用无序列表包围 
+     	                   	       94.         validClass: "valid",                        //通过验证的样式类 
+     	                   	       95.         errorElement: "em",                         //验证标签的名称，默认为：label 
+     	                   	       96.         success: "valid"                            //验证通过的样式类  
+     	                   	       97.         */
+   							});  
+   										
+       $("button").click(function(){  
+   	         validator.resetForm();   
+   	     });   
+   	     //alert($("#password").rules()["required"]);   
+   	     //validator.showErrors({"username": "用户名是必需的"});  
+   	     /*$("button").click(function () {  
+   		105.         var str = "Hello {0}, this is {1}";  
+   		106.         alert("'" + str + "'");   
+   		107.         str = $.validator.format(str, ["koala","oo"]); 
+   		108.         alert("'" + str + "'"); 
+   		109.     });*/                  
+   		 });
+	</script>
+
+</html>
