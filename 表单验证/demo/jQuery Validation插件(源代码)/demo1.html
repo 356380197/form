@@ -4,6 +4,32 @@
     <meta charset="UTF-8">
     <title>jQuery Validation 插件</title>
     <link rel="stylesheet" href="style.css"/>
+		<style type="text/css">
+			label {
+				width: 10em;
+				float: left;
+			}
+			label.haha {
+				color: red;
+				padding-left: 18px;
+				vertical-align: top;
+				width: 196px;
+				b ackground: url("images/unchecked.gif") no-repeat;
+			}
+			input.haha {
+				border: 1px solid red;
+			}
+			label.valid {
+				background: url("images/checked.gif") no-repeat;
+				color: #065FB 9;
+			}
+			input.focus {
+				border: 2px solid green;
+			}
+			ul li {
+				display: block;
+			}
+		</style>
 </head>
 <body>
 <form id="demoForm">
@@ -79,7 +105,10 @@
                url:{
                	required:"必须"
                }
-   			}
+   			},
+			  success: function(label) {      
+       					                     label.addClass("valid").text("Ok!")    
+       					             }    
    			
    			
    		})
